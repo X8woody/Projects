@@ -18,23 +18,9 @@ extern int pVAL;
 
 /*====================ProtoTypes========================*/
 
-
+void setup();
 
 /*====================MAIN_APPLICATION========================*/
-
-
-
-/*====================Functions========================*/
-
-void setup()
-{
-	Monitor_Status     = Wait_Status;
-	LED_Status         = GPIO_INITIALIZATION;
-	PressureSen_Status = init_PressureSens;
-	LED_Status();
-	PressureSen_Status();
-}
-
 
 int main()
 {
@@ -53,6 +39,17 @@ int main()
 		Monitor_Status();
 	}
 	return 0;
+}
+
+/*====================Functions========================*/
+
+void setup()
+{
+	Monitor_Status     = Wait_Status;
+	LED_Status         = GPIO_INITIALIZATION;
+	PressureSen_Status = init_PressureSens;
+	LED_Status();
+	PressureSen_Status();
 }
 
 /*===============================================================*/
