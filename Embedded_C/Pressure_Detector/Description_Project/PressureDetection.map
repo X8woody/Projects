@@ -1,0 +1,195 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+LED_Status          0x4               LED_S.o
+PressureSen_Status  0x4               HPD.o
+Monitor_Status      0x4               MAlarm.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x0000000008000000 0x0000000000020000 xr
+SRAM             0x0000000020000000 0x0000000000005000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.text           0x0000000008000000      0x330
+ *(.vectors*)
+ .vectors       0x0000000008000000       0x48 startup.o
+                0x0000000008000000                victors
+ *(.text*)
+ .text          0x0000000008000048       0x8c HPD.o
+                0x0000000008000048                init_PressureSens
+                0x0000000008000064                reading
+                0x0000000008000090                PDelay
+                0x00000000080000bc                getPressureVal
+ .text          0x00000000080000d4       0xd8 LED_S.o
+                0x00000000080000d4                init_LED
+                0x00000000080000f0                Idle
+                0x000000000800010c                Set_Alarm_actuator
+                0x0000000008000158                GPIO_INITIALIZATION
+ .text          0x00000000080001ac       0x80 mainAlgo.o
+                0x00000000080001ac                setup
+                0x00000000080001ec                main
+ .text          0x000000000800022c       0x70 MAlarm.o
+                0x000000000800022c                Wait_Status
+                0x0000000008000248                LDelay
+                0x0000000008000274                High_pressure_detect
+ .text          0x000000000800029c       0x94 startup.o
+                0x000000000800029c                _reset_handler
+                0x0000000008000324                _UsageFault_handler
+                0x0000000008000324                _IRQ2
+                0x0000000008000324                _IRQ0
+                0x0000000008000324                _MemManage_handler
+                0x0000000008000324                _SysTick_Handler
+                0x0000000008000324                _DebugMonitor_Handler
+                0x0000000008000324                _PendSV_Handler
+                0x0000000008000324                _SVCall_Handler
+                0x0000000008000324                _IRQ1
+                0x0000000008000324                _HardFault_handler
+                0x0000000008000324                _NMI_handler
+                0x0000000008000324                _BusFault_handler
+                0x0000000008000324                _Reserved_handler
+                0x0000000008000324                _Default_Handler
+ *(.rodata)
+                0x0000000008000330                _E_Text = .
+
+.glue_7         0x0000000008000330        0x0
+ .glue_7        0x0000000008000330        0x0 linker stubs
+
+.glue_7t        0x0000000008000330        0x0
+ .glue_7t       0x0000000008000330        0x0 linker stubs
+
+.vfp11_veneer   0x0000000008000330        0x0
+ .vfp11_veneer  0x0000000008000330        0x0 linker stubs
+
+.v4_bx          0x0000000008000330        0x0
+ .v4_bx         0x0000000008000330        0x0 linker stubs
+
+.iplt           0x0000000008000330        0x0
+ .iplt          0x0000000008000330        0x0 HPD.o
+
+.rel.dyn        0x0000000008000330        0x0
+ .rel.iplt      0x0000000008000330        0x0 HPD.o
+
+.data           0x0000000020000000        0x0 load address 0x0000000008000330
+                0x0000000020000000                _S_Data = .
+ *(.data*)
+ .data          0x0000000020000000        0x0 HPD.o
+ .data          0x0000000020000000        0x0 LED_S.o
+ .data          0x0000000020000000        0x0 mainAlgo.o
+ .data          0x0000000020000000        0x0 MAlarm.o
+ .data          0x0000000020000000        0x0 startup.o
+                0x0000000020000000                _E_Data = .
+
+.igot.plt       0x0000000020000000        0x0 load address 0x0000000008000330
+ .igot.plt      0x0000000020000000        0x0 HPD.o
+
+.bss            0x0000000020000000       0x10 load address 0x0000000008000330
+                0x0000000020000000                _S_Bss = .
+ *(.bss*)
+ .bss           0x0000000020000000        0x4 HPD.o
+                0x0000000020000000                pVAL
+ .bss           0x0000000020000004        0x0 LED_S.o
+ .bss           0x0000000020000004        0x0 mainAlgo.o
+ .bss           0x0000000020000004        0x0 MAlarm.o
+ .bss           0x0000000020000004        0x0 startup.o
+                0x0000000020000004                _E_Bss = .
+                0x0000000020000004                . = ALIGN (0x4)
+ COMMON         0x0000000020000004        0x4 HPD.o
+                0x0000000020000004                PressureSen_Status
+ COMMON         0x0000000020000008        0x4 LED_S.o
+                0x0000000020000008                LED_Status
+ COMMON         0x000000002000000c        0x4 MAlarm.o
+                0x000000002000000c                Monitor_Status
+                0x0000000020001010                . = (. + 0x1000)
+                0x0000000020001010                _Stack_Top = .
+LOAD HPD.o
+LOAD LED_S.o
+LOAD mainAlgo.o
+LOAD MAlarm.o
+LOAD startup.o
+OUTPUT(PressureDetection.elf elf32-littlearm)
+
+.debug_info     0x0000000000000000     0x29bb
+ .debug_info    0x0000000000000000      0xa30 HPD.o
+ .debug_info    0x0000000000000a30      0xa32 LED_S.o
+ .debug_info    0x0000000000001462      0x9e4 mainAlgo.o
+ .debug_info    0x0000000000001e46      0xa08 MAlarm.o
+ .debug_info    0x000000000000284e      0x16d startup.o
+
+.debug_abbrev   0x0000000000000000      0x869
+ .debug_abbrev  0x0000000000000000      0x208 HPD.o
+ .debug_abbrev  0x0000000000000208      0x1f9 LED_S.o
+ .debug_abbrev  0x0000000000000401      0x1ab mainAlgo.o
+ .debug_abbrev  0x00000000000005ac      0x1f9 MAlarm.o
+ .debug_abbrev  0x00000000000007a5       0xc4 startup.o
+
+.debug_loc      0x0000000000000000      0x3c0
+ .debug_loc     0x0000000000000000      0x110 HPD.o
+ .debug_loc     0x0000000000000110      0x110 LED_S.o
+ .debug_loc     0x0000000000000220       0x58 mainAlgo.o
+ .debug_loc     0x0000000000000278       0xcc MAlarm.o
+ .debug_loc     0x0000000000000344       0x7c startup.o
+
+.debug_aranges  0x0000000000000000       0xa0
+ .debug_aranges
+                0x0000000000000000       0x20 HPD.o
+ .debug_aranges
+                0x0000000000000020       0x20 LED_S.o
+ .debug_aranges
+                0x0000000000000040       0x20 mainAlgo.o
+ .debug_aranges
+                0x0000000000000060       0x20 MAlarm.o
+ .debug_aranges
+                0x0000000000000080       0x20 startup.o
+
+.debug_line     0x0000000000000000      0xb8b
+ .debug_line    0x0000000000000000      0x2cd HPD.o
+ .debug_line    0x00000000000002cd      0x2cb LED_S.o
+ .debug_line    0x0000000000000598      0x207 mainAlgo.o
+ .debug_line    0x000000000000079f      0x1f9 MAlarm.o
+ .debug_line    0x0000000000000998      0x1f3 startup.o
+
+.debug_str      0x0000000000000000      0x683
+ .debug_str     0x0000000000000000      0x54e HPD.o
+                                        0x5af (size before relaxing)
+ .debug_str     0x000000000000054e       0x5d LED_S.o
+                                        0x5b7 (size before relaxing)
+ .debug_str     0x00000000000005ab       0x25 mainAlgo.o
+                                        0x58e (size before relaxing)
+ .debug_str     0x00000000000005d0       0x31 MAlarm.o
+                                        0x58d (size before relaxing)
+ .debug_str     0x0000000000000601       0x82 startup.o
+                                        0x1ef (size before relaxing)
+
+.comment        0x0000000000000000       0x7b
+ .comment       0x0000000000000000       0x7b HPD.o
+                                         0x7c (size before relaxing)
+ .comment       0x000000000000007b       0x7c LED_S.o
+ .comment       0x000000000000007b       0x7c mainAlgo.o
+ .comment       0x000000000000007b       0x7c MAlarm.o
+ .comment       0x000000000000007b       0x7c startup.o
+
+.ARM.attributes
+                0x0000000000000000       0x33
+ .ARM.attributes
+                0x0000000000000000       0x33 HPD.o
+ .ARM.attributes
+                0x0000000000000033       0x33 LED_S.o
+ .ARM.attributes
+                0x0000000000000066       0x33 mainAlgo.o
+ .ARM.attributes
+                0x0000000000000099       0x33 MAlarm.o
+ .ARM.attributes
+                0x00000000000000cc       0x33 startup.o
+
+.debug_frame    0x0000000000000000      0x234
+ .debug_frame   0x0000000000000000       0x94 HPD.o
+ .debug_frame   0x0000000000000094       0x94 LED_S.o
+ .debug_frame   0x0000000000000128       0x48 mainAlgo.o
+ .debug_frame   0x0000000000000170       0x74 MAlarm.o
+ .debug_frame   0x00000000000001e4       0x50 startup.o
