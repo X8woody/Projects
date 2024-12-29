@@ -48,7 +48,6 @@ uint8_t Main_App()
 	DPRINTF("8.  Update the Student details by ID number\n");
 	DPRINTF("9.  Show all information of all Students\n");
 	DPRINTF("10. To SAVE\n");
-	DPRINTF("11. To Exit\n");
 	DPRINTF("===========================================================\n\n");
 	Delay(DMoni);
 	DPRINTF("10. Enter your choice: ");
@@ -85,9 +84,6 @@ uint8_t Main_App()
 		break;
 	case 10:
 		Save();
-		break;
-	case 11:
-		exit(1);
 		break;
 	default :
 		DPRINTF("\n        -------------> Error !! insert the correct choice <-------------\n\n");
