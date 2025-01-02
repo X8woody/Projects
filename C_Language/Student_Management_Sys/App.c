@@ -50,7 +50,7 @@ uint8_t Main_App()
 	DPRINTF("10. To SAVE\n");
 	DPRINTF("===========================================================\n\n");
 	Delay(DMoni);
-	DPRINTF("10. Enter your choice: ");
+	DPRINTF("Enter your choice: ");
 	int32_t choice;
 	scanf("%d",&choice);
 	switch(choice)
